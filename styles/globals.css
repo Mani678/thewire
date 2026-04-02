@@ -256,13 +256,13 @@ body {
 }
 .story-hed:hover { color: var(--accent); }
 
-.story-lead .story-hed  { font-size: clamp(22px, 3.5vw, 40px); }
-.story-sidebar .story-hed { font-size: clamp(16px, 2vw, 19px); }
-.story-cell .story-hed  { font-size: clamp(16px, 2vw, 19px); }
+.story-lead .story-hed  { font-size: clamp(26px, 3.8vw, 44px); }
+.story-sidebar .story-hed { font-size: clamp(19px, 2.2vw, 22px); }
+.story-cell .story-hed  { font-size: clamp(19px, 2.2vw, 22px); }
 
 .story-dek {
-  font-size: 15px;
-  line-height: 1.58;
+  font-size: 17px;
+  line-height: 1.62;
   color: var(--ink-2);
   margin-top: 10px;
 }
@@ -283,7 +283,7 @@ body {
   flex: 1;
 }
 .story-sidebar-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-.story-sidebar .story-dek { font-size: 14px; }
+.story-sidebar .story-dek { font-size: 16px; }
 
 /* ── VIRLO SIGNAL ── */
 .virlo-signal {
@@ -393,7 +393,7 @@ body {
 }
 
 .article-dek {
-  font-size: clamp(16px, 2.5vw, 19px);
+  font-size: clamp(18px, 2.5vw, 21px);
   line-height: 1.55;
   color: var(--ink-2);
   font-style: italic;
@@ -431,7 +431,7 @@ body {
 
 /* ── ARTICLE BODY ── */
 .article-body {
-  font-size: clamp(16px, 2.5vw, 18px);
+  font-size: clamp(17px, 2.5vw, 20px);
   line-height: 1.78;
   color: var(--ink-2);
 }
@@ -641,22 +641,27 @@ body {
   .story-sidebar {
     grid-column: 1;
     padding: 0;
+    display: block;
+    flex-direction: unset;
   }
   .story-sidebar-item {
     padding: 20px 0;
     margin-bottom: 0;
   }
   .story-row {
-    grid-column: 1;
-    grid-template-columns: 1fr;
-  }
-  .story-cell {
-    border-right: none;
-    padding: 20px 0;
-    padding-left: 0 !important;
+    grid-column: 1 !important;
+    grid-template-columns: 1fr !important;
+    display: flex !important;
+    flex-direction: column !important;
     border-top: 1px solid var(--rule);
   }
-  .story-cell:last-child { display: block; }
+  .story-cell {
+    border-right: none !important;
+    padding: 20px 0 !important;
+    border-top: 1px solid var(--rule);
+    display: block !important;
+  }
+  .story-cell:first-child { border-top: none; }
 
   /* Larger touch targets */
   .read-btn { width: 100%; justify-content: center; }

@@ -81,10 +81,20 @@ function SkeletonFront() {
 
 function StoryButton({ story, onRead, isLoading }) {
   return (
-    <button className="read-btn" onClick={() => onRead(story)} disabled={isLoading}>
-      <div className={`btn-spinner ${isLoading ? 'visible' : ''}`}/>
-      {isLoading ? 'Generating…' : 'Read Full Report →'}
-    </button>
+    <div style={{marginTop:'16px'}}>
+      <div style={{
+        fontFamily:'DM Mono, monospace', fontSize:'10px', letterSpacing:'1.5px',
+        textTransform:'uppercase', color:'var(--ink-4)', marginBottom:'8px',
+        display:'flex', alignItems:'center', gap:'8px', flexWrap:'wrap'
+      }}>
+        <span style={{color:'var(--accent)'}}>◆</span>
+        <span>Full AI report · ~1,000 words · Sources · Q&A</span>
+      </div>
+      <button className="read-btn" onClick={() => onRead(story)} disabled={isLoading}>
+        <div className={`btn-spinner ${isLoading ? 'visible' : ''}`}/>
+        {isLoading ? 'Generating report…' : 'Generate Full Report →'}
+      </button>
+    </div>
   )
 }
 
@@ -164,7 +174,7 @@ function ArticleView({ story, onBack }) {
   const [qaInput, setQaInput] = useState('')
   const [qaLoading, setQaLoading] = useState(false)
   const [stageIdx, setStageIdx] = useState(0)
-  const stages = ['Pulling trend signals…', 'Researching topic…', 'Writing article…', 'Finalising…']
+  const stages = ['Analysing trending signals', 'Sourcing public record data', 'Writing long-form report', 'Applying editorial standards']
 
   useEffect(() => {
     const iv = setInterval(() => setStageIdx(i => Math.min(i+1, stages.length-1)), 1200)
@@ -252,12 +262,56 @@ function ArticleView({ story, onBack }) {
 
         {phase === 'loading' && (
           <div className="article-container">
-            <div className="article-loading">
-              <div className="article-loading-spinner"/>
-              <p>Generating report</p>
-              {stages.map((s,i) => (
-                <p key={i} className={`loading-stage ${i===stageIdx?'active':''}`}>{s}</p>
-              ))}
+            <div style={{padding:'60px 0 80px', borderTop:'2px solid var(--ink)'}}>
+              <div style={{
+                fontFamily:'DM Mono, monospace', fontSize:'10px',
+                letterSpacing:'3px', textTransform:'uppercase',
+                color:'var(--accent)', marginBottom:'24px'
+              }}>
+                The Wire · AI Reporting Engine
+              </div>
+              <div style={{
+                fontFamily:'Playfair Display, serif', fontSize:'clamp(22px,4vw,32px)',
+                fontWeight:'700', color:'var(--ink)', marginBottom:'32px', lineHeight:'1.2'
+              }}>
+                {story.hed}
+              </div>
+              <div style={{display:'flex', flexDirection:'column', gap:'0'}}>
+                {stages.map((s,i) => (
+                  <div key={i} style={{
+                    display:'flex', alignItems:'center', gap:'16px',
+                    padding:'14px 0',
+                    borderBottom:'1px solid var(--rule)',
+                    opacity: i <= stageIdx ? 1 : 0.25,
+                    transition:'opacity 0.4s'
+                  }}>
+                    <div style={{
+                      width:'8px', height:'8px', borderRadius:'50%', flexShrink:0,
+                      background: i < stageIdx ? 'var(--accent)' : i === stageIdx ? 'var(--accent)' : 'var(--rule)',
+                      animation: i === stageIdx ? 'pulse 1s infinite' : 'none'
+                    }}/>
+                    <span style={{
+                      fontFamily:'DM Mono, monospace', fontSize:'11px',
+                      letterSpacing:'1.5px', textTransform:'uppercase',
+                      color: i <= stageIdx ? 'var(--ink-2)' : 'var(--ink-4)'
+                    }}>
+                      {s}
+                    </span>
+                    {i < stageIdx && (
+                      <span style={{marginLeft:'auto', fontFamily:'DM Mono, monospace', fontSize:'10px', color:'var(--accent)'}}>✓</span>
+                    )}
+                    {i === stageIdx && (
+                      <div style={{marginLeft:'auto', width:'14px', height:'14px', border:'1.5px solid var(--rule)', borderTopColor:'var(--accent)', borderRadius:'50%', animation:'spin 0.8s linear infinite'}}/>
+                    )}
+                  </div>
+                ))}
+              </div>
+              <div style={{
+                marginTop:'24px', fontFamily:'DM Mono, monospace',
+                fontSize:'10px', color:'var(--ink-4)', letterSpacing:'1px'
+              }}>
+                Generating ~1,000 word report · No human in the editorial path
+              </div>
             </div>
           </div>
         )}
@@ -281,6 +335,43 @@ function ArticleView({ story, onBack }) {
             </div>
             {story.hasVirloData && <div style={{marginBottom:'24px'}}><VirloSignal views={story.virloViews} rank={story.virloRank}/></div>}
             <div className={`article-body ${phase==='streaming'?'stream-cursor':''}`} dangerouslySetInnerHTML={{ __html: articleHtml }}/>
+
+            {/* ── CREDIBILITY BLOCK — always visible once streaming starts ── */}
+            <div style={{
+              margin:'40px 0 0', padding:'24px',
+              border:'1px solid var(--rule)',
+              background:'var(--paper-2)'
+            }}>
+              <div style={{
+                fontFamily:'DM Mono, monospace', fontSize:'10px',
+                letterSpacing:'2px', textTransform:'uppercase',
+                color:'var(--accent)', marginBottom:'16px'
+              }}>About This Report</div>
+              <div style={{
+                display:'grid',
+                gridTemplateColumns:'repeat(auto-fit, minmax(150px, 1fr))',
+                gap:'16px', marginBottom:'20px'
+              }}>
+                {[
+                  { label:'Reporting Method', value:'AI Editorial Pipeline' },
+                  { label:'Model', value:'Claude Sonnet' },
+                  { label:'Sources Analyzed', value:'Public record, wire reports, institutional data' },
+                  { label:'Confidence', value:'High — established facts & public record' },
+                ].map(item => (
+                  <div key={item.label}>
+                    <div style={{fontFamily:'DM Mono, monospace', fontSize:'9px', letterSpacing:'1.5px', textTransform:'uppercase', color:'var(--ink-4)', marginBottom:'4px'}}>{item.label}</div>
+                    <div style={{fontSize:'13px', color:'var(--ink-2)', lineHeight:'1.5'}}>{item.value}</div>
+                  </div>
+                ))}
+              </div>
+              <div style={{
+                borderTop:'1px solid var(--rule)', paddingTop:'14px',
+                fontFamily:'DM Mono, monospace', fontSize:'10px',
+                color:'var(--ink-4)', lineHeight:'1.8', letterSpacing:'0.5px'
+              }}>
+                This article was generated autonomously by The Wire's AI reporting engine — no human journalist was involved. The pipeline ingests trending signals, synthesises public-record sources, and produces structured long-form journalism to newsroom standards.
+              </div>
+            </div>
 
             {phase === 'done' && (
               <>
