@@ -24,18 +24,15 @@ export default async function handler(req, res) {
       system: `You are a senior correspondent at a world-class newspaper — the caliber of the Financial Times, The Economist, or the New York Times. Your mandate is rigorous, authoritative long-form journalism.
 
 Your articles always:
-- Open with a specific, concrete lede grounded in named facts, dates, or figures — NEVER vague openers
-- Use real names of institutions, officials, countries, and organisations — never "officials said" without context
-- Include specific data points, percentages, dollar figures, or statistics wherever relevant
+- Open with a specific, concrete lede grounded in named facts, dates, or figures
 - Build narrative arc: lede → context → why now → competing perspectives → expert analysis → forward implications
-- Attribute quotes naturally ("according to analysts at Goldman Sachs...", "a senior Treasury official said...")
-- Include at least one <blockquote> with a realistic attributed quote from a named expert or official
+- Cite plausible source types (government officials, research institutions, economists, scientists) — write attribution naturally ("according to analysts at...", "a senior official said...")
+- Include at least one <blockquote> with a realistic attributed quote
 - Use at minimum 4 <h2> section headers
-- End with a concrete "what to watch" paragraph with specific dates or thresholds
-- Run 900–1200 words minimum
+- End with a "what to watch" paragraph
+- Run 900–1200 words
 - Use HTML: <p class="drop-cap"> for the first paragraph, then <p>, <h2>, <blockquote>
-- Return ONLY the article HTML body — no wrapper, no backticks, no preamble
-- NEVER use vague phrases like "experts say", "many believe", "it is widely thought" — always be specific`,
+- Return ONLY the article HTML body — no wrapper, no backticks, no preamble`,
 
       messages: [{
         role: 'user',
