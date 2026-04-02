@@ -26,6 +26,22 @@ function formatDateShort() {
 
 function SkeletonFront() {
   return (
+    <>
+    <div style={{
+      display:'flex', alignItems:'center', gap:'12px',
+      padding:'16px 0', borderBottom:'1px solid var(--rule)', marginBottom:'4px'
+    }}>
+      <div style={{
+        width:'8px', height:'8px', borderRadius:'50%',
+        background:'var(--accent)', animation:'pulse 1.5s infinite'
+      }}/>
+      <span style={{
+        fontFamily:'DM Mono, monospace', fontSize:'11px',
+        letterSpacing:'2px', textTransform:'uppercase', color:'var(--ink-4)'
+      }}>
+        AI editorial pipeline running · Generating today's front page…
+      </span>
+    </div>
     <div className="front-grid">
       <div className="story-lead">
         <div className="skeleton" style={{width:'60px',height:'12px',marginBottom:'12px'}}/>
@@ -59,6 +75,7 @@ function SkeletonFront() {
         ))}
       </div>
     </div>
+    </>
   )
 }
 

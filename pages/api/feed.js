@@ -29,7 +29,7 @@ Return ONLY valid JSON array, no markdown:
 
     const response = await client.messages.create({
       model: 'claude-haiku-4-5-20251001',
-      max_tokens: 1200,
+      max_tokens: 2400,
       messages: [{ role: 'user', content: prompt }]
     })
 
