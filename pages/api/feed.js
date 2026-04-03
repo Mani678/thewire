@@ -53,8 +53,9 @@ export default async function handler(req, res) {
       hasVirloData: !!process.env.VIRLO_API_KEY && seeds[i]?.virloViews > 0
     }))
 
-    // Cache for 1 hour — cron job keeps this fresh in background
-    res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate=3600')
+    // Cache 24hrs on edge — stale-while-revalidate means first visitor after expiry
+    // triggers background refresh while they still get instant cached response
+    res.setHeader('Cache-Control', 's-maxage=86400, stale-while-revalidate=86400')
     res.json({ stories, generatedAt: new Date().toISOString() })
   } catch (err) {
     console.error('Feed error:', err)
