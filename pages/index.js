@@ -458,8 +458,12 @@ export default function Home() {
     ? stories.map(s => s.hed).join('   ·   ')
     : 'Loading latest developments…'
 
+  useEffect(() => {
+    document.documentElement.className = light ? 'light-mode' : ''
+  }, [light])
+
   return (
-    <div className={light ? 'light-mode' : ''}>
+    <div>
       <Head>
         <title>{activeStory ? `${activeStory.hed} — The Wire` : 'The Wire — AI-Reported News'}</title>
         <meta name="description" content="Real reporting, no human in the editorial path."/>

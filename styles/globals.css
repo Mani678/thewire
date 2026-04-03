@@ -15,7 +15,7 @@
 }
 
 /* ── LIGHT MODE ── */
-.light-mode {
+html.light-mode {
   --ink:        #1a1714;
   --ink-2:      #3d3830;
   --ink-3:      #6b6358;
@@ -28,12 +28,12 @@
   --rule:       #ccc4b8;
 }
 
-.light-mode body { background: var(--paper); color: var(--ink); }
-.light-mode .masthead { background: #1a1714; }
-.light-mode .digest-panel { background: #1a1714; border-color: #333; }
-.light-mode .qa-input { background: var(--paper-2); color: var(--ink); }
-.light-mode .qa-a { background: var(--paper-2); }
-.light-mode .skeleton {
+html.light-mode body { background: var(--paper); color: var(--ink); }
+html.light-mode .masthead { background: #1a1714; }
+html.light-mode .digest-panel { background: #1a1714; border-color: #333; }
+html.light-mode .qa-input { background: var(--paper-2); color: var(--ink); }
+html.light-mode .qa-a { background: var(--paper-2); }
+html.light-mode .skeleton {
   background: linear-gradient(90deg, var(--paper-2) 25%, var(--paper-3) 50%, var(--paper-2) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
