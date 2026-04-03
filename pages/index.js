@@ -37,7 +37,7 @@ function useTheme() {
   return [light, toggle]
 }
 
-
+function SkeletonFront() {
   return (
     <>
     <div style={{
