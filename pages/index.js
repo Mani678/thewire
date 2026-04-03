@@ -88,7 +88,7 @@ function StoryButton({ story, onRead, isLoading }) {
         display:'flex', alignItems:'center', gap:'8px', flexWrap:'wrap'
       }}>
         <span style={{color:'var(--accent)'}}>◆</span>
-        <span>Full AI report · ~1,000 words · Sources · Q&A</span>
+        <span>Full AI report · Sources · Q&A</span>
       </div>
       <button className="read-btn" onClick={() => onRead(story)} disabled={isLoading}>
         <div className={`btn-spinner ${isLoading ? 'visible' : ''}`}/>
@@ -310,7 +310,7 @@ function ArticleView({ story, onBack }) {
                 marginTop:'24px', fontFamily:'DM Mono, monospace',
                 fontSize:'10px', color:'var(--ink-4)', letterSpacing:'1px'
               }}>
-                Generating ~1,000 word report · No human in the editorial path
+                No human in the editorial path
               </div>
             </div>
           </div>
@@ -337,41 +337,6 @@ function ArticleView({ story, onBack }) {
             <div className={`article-body ${phase==='streaming'?'stream-cursor':''}`} dangerouslySetInnerHTML={{ __html: articleHtml }}/>
 
             {/* ── CREDIBILITY BLOCK — always visible once streaming starts ── */}
-            <div style={{
-              margin:'40px 0 0', padding:'24px',
-              border:'1px solid var(--rule)',
-              background:'var(--paper-2)'
-            }}>
-              <div style={{
-                fontFamily:'DM Mono, monospace', fontSize:'10px',
-                letterSpacing:'2px', textTransform:'uppercase',
-                color:'var(--accent)', marginBottom:'16px'
-              }}>About This Report</div>
-              <div style={{
-                display:'grid',
-                gridTemplateColumns:'repeat(auto-fit, minmax(150px, 1fr))',
-                gap:'16px', marginBottom:'20px'
-              }}>
-                {[
-                  { label:'Reporting Method', value:'AI Editorial Pipeline' },
-                  { label:'Model', value:'Claude Sonnet' },
-                  { label:'Sources Analyzed', value:'Public record, wire reports, institutional data' },
-                  { label:'Confidence', value:'High — established facts & public record' },
-                ].map(item => (
-                  <div key={item.label}>
-                    <div style={{fontFamily:'DM Mono, monospace', fontSize:'9px', letterSpacing:'1.5px', textTransform:'uppercase', color:'var(--ink-4)', marginBottom:'4px'}}>{item.label}</div>
-                    <div style={{fontSize:'13px', color:'var(--ink-2)', lineHeight:'1.5'}}>{item.value}</div>
-                  </div>
-                ))}
-              </div>
-              <div style={{
-                borderTop:'1px solid var(--rule)', paddingTop:'14px',
-                fontFamily:'DM Mono, monospace', fontSize:'10px',
-                color:'var(--ink-4)', lineHeight:'1.8', letterSpacing:'0.5px'
-              }}>
-                This article was generated autonomously by The Wire's AI reporting engine — no human journalist was involved. The pipeline ingests trending signals, synthesises public-record sources, and produces structured long-form journalism to newsroom standards.
-              </div>
-            </div>
 
             {phase === 'done' && (
               <>
