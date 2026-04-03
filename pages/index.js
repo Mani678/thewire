@@ -24,7 +24,20 @@ function formatDateShort() {
 
 
 
-function SkeletonFront() {
+function useTheme() {
+  const [light, setLight] = useState(false)
+  useEffect(() => {
+    const saved = localStorage.getItem('thewire-theme')
+    if (saved === 'light') setLight(true)
+  }, [])
+  const toggle = () => setLight(l => {
+    localStorage.setItem('thewire-theme', !l ? 'light' : 'dark')
+    return !l
+  })
+  return [light, toggle]
+}
+
+
   return (
     <>
     <div style={{
@@ -374,7 +387,7 @@ function ArticleView({ story, onBack }) {
   )
 }
 
-function Masthead({ ticker, activeSection, onSection }) {
+function Masthead({ ticker, activeSection, onSection, light, onToggleTheme }) {
   return (
     <>
       <header className="masthead">
@@ -384,10 +397,15 @@ function Masthead({ ticker, activeSection, onSection }) {
               <div className="pub-name">The Wire</div>
               <div className="pub-tagline">Independent · AI-Reported · No Human Editorial</div>
             </div>
-            <div className="masthead-meta">
-              {new Date().toLocaleDateString('en-US',{weekday:'long'})}<br/>
-              {new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})}<br/>
-              Est. 2026
+            <div style={{display:'flex',flexDirection:'column',alignItems:'flex-end',gap:'8px'}}>
+              <button className="theme-toggle" onClick={onToggleTheme}>
+                {light ? '◑ Dark' : '☀ Light'}
+              </button>
+              <div className="masthead-meta">
+                {new Date().toLocaleDateString('en-US',{weekday:'long'})}<br/>
+                {new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})}<br/>
+                Est. 2026
+              </div>
             </div>
           </div>
           <hr className="masthead-rule"/>
@@ -417,6 +435,7 @@ export default function Home() {
   const [generatingId, setGeneratingId] = useState(null)
   const [activeSection, setActiveSection] = useState('All')
   const [hasVirlo, setHasVirlo] = useState(false)
+  const [light, toggleTheme] = useTheme()
 
   useEffect(() => {
     fetch('/api/feed')
@@ -440,7 +459,7 @@ export default function Home() {
     : 'Loading latest developments…'
 
   return (
-    <div>
+    <div className={light ? 'light-mode' : ''}>
       <Head>
         <title>{activeStory ? `${activeStory.hed} — The Wire` : 'The Wire — AI-Reported News'}</title>
         <meta name="description" content="Real reporting, no human in the editorial path."/>
@@ -455,6 +474,8 @@ export default function Home() {
         ticker={tickerText}
         activeSection={activeSection}
         onSection={s => { setActiveSection(s); setActiveStory(null); setGeneratingId(null) }}
+        light={light}
+        onToggleTheme={toggleTheme}
       />
 
       {activeStory ? (
