@@ -431,7 +431,7 @@ function Masthead({ ticker, activeSection, onSection, light, onToggleTheme }) {
 // ── SUBSCRIBE BAR ──
 function SubscribeBar() {
   const [email, setEmail] = useState('')
-  const [status, setStatus] = useState('idle') // idle | success | error
+  const [status, setStatus] = useState('idle')
 
   const handleSubmit = () => {
     if (!email || !email.includes('@')) { setStatus('error'); return }
@@ -442,37 +442,28 @@ function SubscribeBar() {
   return (
     <div style={{
       background:'var(--accent)', color:'#fff',
-      padding:'48px 0', marginTop:'60px'
+      padding:'20px 0', marginTop:'40px'
     }}>
       <div style={{maxWidth:'1200px', margin:'0 auto', padding:'0 24px'}}>
-        <div style={{maxWidth:'560px', margin:'0 auto', textAlign:'center'}}>
+        {status === 'success' ? (
           <div style={{
-            fontFamily:'DM Mono, monospace', fontSize:'10px',
-            letterSpacing:'3px', textTransform:'uppercase',
-            opacity:0.8, marginBottom:'12px'
-          }}>Daily Briefing</div>
-          <div style={{
-            fontFamily:'Playfair Display, serif', fontSize:'clamp(24px,4vw,32px)',
-            fontWeight:'700', marginBottom:'12px', lineHeight:'1.2'
+            textAlign:'center', fontFamily:'DM Mono, monospace',
+            fontSize:'11px', letterSpacing:'2px', textTransform:'uppercase', padding:'6px 0'
           }}>
-            The Wire in your inbox. Every morning.
+            ✓ Subscribed — first edition arrives tomorrow
           </div>
+        ) : (
           <div style={{
-            fontSize:'15px', opacity:0.85, marginBottom:'28px', lineHeight:'1.6'
+            display:'flex', alignItems:'center',
+            gap:'16px', flexWrap:'wrap', justifyContent:'space-between'
           }}>
-            AI-reported news delivered daily. No editors, no agenda, no noise.
-          </div>
-
-          {status === 'success' ? (
             <div style={{
-              background:'rgba(255,255,255,0.15)', padding:'16px 24px',
-              fontFamily:'DM Mono, monospace', fontSize:'12px',
-              letterSpacing:'1.5px', textTransform:'uppercase'
+              fontFamily:'Playfair Display, serif', fontSize:'clamp(16px,2.5vw,20px)',
+              fontWeight:'700', whiteSpace:'nowrap'
             }}>
-              ✓ You're subscribed — first edition arrives tomorrow
+              The Wire in your inbox. Every morning.
             </div>
-          ) : (
-            <div style={{display:'flex', gap:'0', maxWidth:'440px', margin:'0 auto'}}>
+            <div style={{display:'flex', gap:'0', flex:'1', maxWidth:'420px', minWidth:'240px'}}>
               <input
                 type="email"
                 value={email}
@@ -480,32 +471,28 @@ function SubscribeBar() {
                 onKeyDown={e => e.key === 'Enter' && handleSubmit()}
                 placeholder="Your email address"
                 style={{
-                  flex:1, border:'none', padding:'14px 18px',
+                  flex:1, border:'none', padding:'10px 14px',
                   fontFamily:'Source Serif 4, serif', fontSize:'16px',
                   background:'rgba(255,255,255,0.95)', color:'#1a1714',
                   outline:'none', minWidth:0,
-                  borderBottom: status === 'error' ? '3px solid #ff0' : 'none'
                 }}
               />
-              <button
-                onClick={handleSubmit}
-                style={{
-                  background:'#1a1714', color:'#fff', border:'none',
-                  padding:'14px 22px', fontFamily:'DM Mono, monospace',
-                  fontSize:'11px', letterSpacing:'1.5px', textTransform:'uppercase',
-                  cursor:'pointer', whiteSpace:'nowrap', minHeight:'44px'
-                }}
-              >
+              <button onClick={handleSubmit} style={{
+                background:'#1a1714', color:'#fff', border:'none',
+                padding:'10px 18px', fontFamily:'DM Mono, monospace',
+                fontSize:'10px', letterSpacing:'1.5px', textTransform:'uppercase',
+                cursor:'pointer', whiteSpace:'nowrap', minHeight:'44px'
+              }}>
                 Subscribe
               </button>
             </div>
-          )}
-          {status === 'error' && (
-            <div style={{marginTop:'8px', fontSize:'12px', fontFamily:'DM Mono, monospace', opacity:0.8}}>
-              Please enter a valid email address
-            </div>
-          )}
-        </div>
+            {status === 'error' && (
+              <div style={{width:'100%', fontSize:'11px', fontFamily:'DM Mono, monospace', opacity:0.85}}>
+                Please enter a valid email address
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   )
