@@ -511,74 +511,6 @@ function SubscribeBar() {
   )
 }
 
-// ── ABOUT SECTION ──
-function AboutSection() {
-  return (
-    <div style={{background:'var(--paper-2)', padding:'64px 0', marginTop:'0'}}>
-      <div style={{maxWidth:'1200px', margin:'0 auto', padding:'0 24px'}}>
-        <div style={{
-          display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(280px, 1fr))',
-          gap:'48px', alignItems:'start'
-        }}>
-          <div>
-            <div style={{
-              fontFamily:'DM Mono, monospace', fontSize:'10px',
-              letterSpacing:'3px', textTransform:'uppercase',
-              color:'var(--accent)', marginBottom:'16px'
-            }}>About The Wire</div>
-            <div style={{
-              fontFamily:'Playfair Display, serif', fontSize:'clamp(22px,3vw,28px)',
-              fontWeight:'700', color:'var(--ink)', marginBottom:'16px', lineHeight:'1.2'
-            }}>
-              The world's first fully autonomous AI newsroom
-            </div>
-            <div style={{fontSize:'16px', lineHeight:'1.78', color:'var(--ink-2)'}}>
-              The Wire was built on a single belief: serious journalism should not require a human gatekeeper. Every article you read here was written, edited, and published by an AI pipeline — from topic discovery to final copy — with no human in the editorial path.
-            </div>
-          </div>
-
-          <div style={{display:'flex', flexDirection:'column', gap:'28px'}}>
-            {[
-              {
-                step:'01',
-                title:'Trend Detection',
-                body:"Virlo's API monitors 2M+ videos and 500K+ hashtags across TikTok, YouTube, and Instagram in real time — surfacing what the world is actually talking about right now."
-              },
-              {
-                step:'02',
-                title:'Editorial Judgement',
-                body:'Raw trending signals are transformed into serious editorial angles — finding the real story behind the social noise and determining what deserves long-form coverage.'
-              },
-              {
-                step:'03',
-                title:'Long-Form Reporting',
-                body:'Each article is written to newsroom standards: 900+ words, named sources, expert attribution, narrative arc, and a forward-looking analysis section. No human involved.'
-              },
-            ].map(item => (
-              <div key={item.step} style={{display:'flex', gap:'20px', alignItems:'flex-start'}}>
-                <div style={{
-                  fontFamily:'DM Mono, monospace', fontSize:'11px',
-                  letterSpacing:'2px', color:'var(--accent)',
-                  flexShrink:0, paddingTop:'2px'
-                }}>{item.step}</div>
-                <div>
-                  <div style={{
-                    fontFamily:'Playfair Display, serif', fontSize:'17px',
-                    fontWeight:'700', color:'var(--ink)', marginBottom:'6px'
-                  }}>{item.title}</div>
-                  <div style={{fontSize:'14px', lineHeight:'1.7', color:'var(--ink-3)'}}>
-                    {item.body}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
 // ── FOOTER ──
 function Footer() {
   return (
@@ -721,7 +653,6 @@ export default function Home() {
       )}
 
       <SubscribeBar/>
-      <AboutSection/>
       <Footer/>
     </div>
   )
