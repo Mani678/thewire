@@ -428,6 +428,226 @@ function Masthead({ ticker, activeSection, onSection, light, onToggleTheme }) {
   )
 }
 
+// ── SUBSCRIBE BAR ──
+function SubscribeBar() {
+  const [email, setEmail] = useState('')
+  const [status, setStatus] = useState('idle') // idle | success | error
+
+  const handleSubmit = () => {
+    if (!email || !email.includes('@')) { setStatus('error'); return }
+    setStatus('success')
+    setEmail('')
+  }
+
+  return (
+    <div style={{
+      background:'var(--accent)', color:'#fff',
+      padding:'48px 0', marginTop:'60px'
+    }}>
+      <div style={{maxWidth:'1200px', margin:'0 auto', padding:'0 24px'}}>
+        <div style={{maxWidth:'560px', margin:'0 auto', textAlign:'center'}}>
+          <div style={{
+            fontFamily:'DM Mono, monospace', fontSize:'10px',
+            letterSpacing:'3px', textTransform:'uppercase',
+            opacity:0.8, marginBottom:'12px'
+          }}>Daily Briefing</div>
+          <div style={{
+            fontFamily:'Playfair Display, serif', fontSize:'clamp(24px,4vw,32px)',
+            fontWeight:'700', marginBottom:'12px', lineHeight:'1.2'
+          }}>
+            The Wire in your inbox. Every morning.
+          </div>
+          <div style={{
+            fontSize:'15px', opacity:0.85, marginBottom:'28px', lineHeight:'1.6'
+          }}>
+            AI-reported news delivered daily. No editors, no agenda, no noise.
+          </div>
+
+          {status === 'success' ? (
+            <div style={{
+              background:'rgba(255,255,255,0.15)', padding:'16px 24px',
+              fontFamily:'DM Mono, monospace', fontSize:'12px',
+              letterSpacing:'1.5px', textTransform:'uppercase'
+            }}>
+              ✓ You're subscribed — first edition arrives tomorrow
+            </div>
+          ) : (
+            <div style={{display:'flex', gap:'0', maxWidth:'440px', margin:'0 auto'}}>
+              <input
+                type="email"
+                value={email}
+                onChange={e => { setEmail(e.target.value); setStatus('idle') }}
+                onKeyDown={e => e.key === 'Enter' && handleSubmit()}
+                placeholder="Your email address"
+                style={{
+                  flex:1, border:'none', padding:'14px 18px',
+                  fontFamily:'Source Serif 4, serif', fontSize:'16px',
+                  background:'rgba(255,255,255,0.95)', color:'#1a1714',
+                  outline:'none', minWidth:0,
+                  borderBottom: status === 'error' ? '3px solid #ff0' : 'none'
+                }}
+              />
+              <button
+                onClick={handleSubmit}
+                style={{
+                  background:'#1a1714', color:'#fff', border:'none',
+                  padding:'14px 22px', fontFamily:'DM Mono, monospace',
+                  fontSize:'11px', letterSpacing:'1.5px', textTransform:'uppercase',
+                  cursor:'pointer', whiteSpace:'nowrap', minHeight:'44px'
+                }}
+              >
+                Subscribe
+              </button>
+            </div>
+          )}
+          {status === 'error' && (
+            <div style={{marginTop:'8px', fontSize:'12px', fontFamily:'DM Mono, monospace', opacity:0.8}}>
+              Please enter a valid email address
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ── ABOUT SECTION ──
+function AboutSection() {
+  return (
+    <div style={{background:'var(--paper-2)', padding:'64px 0', marginTop:'0'}}>
+      <div style={{maxWidth:'1200px', margin:'0 auto', padding:'0 24px'}}>
+        <div style={{
+          display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(280px, 1fr))',
+          gap:'48px', alignItems:'start'
+        }}>
+          <div>
+            <div style={{
+              fontFamily:'DM Mono, monospace', fontSize:'10px',
+              letterSpacing:'3px', textTransform:'uppercase',
+              color:'var(--accent)', marginBottom:'16px'
+            }}>About The Wire</div>
+            <div style={{
+              fontFamily:'Playfair Display, serif', fontSize:'clamp(22px,3vw,28px)',
+              fontWeight:'700', color:'var(--ink)', marginBottom:'16px', lineHeight:'1.2'
+            }}>
+              The world's first fully autonomous AI newsroom
+            </div>
+            <div style={{fontSize:'16px', lineHeight:'1.78', color:'var(--ink-2)'}}>
+              The Wire was built on a single belief: serious journalism should not require a human gatekeeper. Every article you read here was written, edited, and published by an AI pipeline — from topic discovery to final copy — with no human in the editorial path.
+            </div>
+          </div>
+
+          <div style={{display:'flex', flexDirection:'column', gap:'28px'}}>
+            {[
+              {
+                step:'01',
+                title:'Trend Detection',
+                body:"Virlo's API monitors 2M+ videos and 500K+ hashtags across TikTok, YouTube, and Instagram in real time — surfacing what the world is actually talking about right now."
+              },
+              {
+                step:'02',
+                title:'Editorial Judgement',
+                body:'Raw trending signals are transformed into serious editorial angles — finding the real story behind the social noise and determining what deserves long-form coverage.'
+              },
+              {
+                step:'03',
+                title:'Long-Form Reporting',
+                body:'Each article is written to newsroom standards: 900+ words, named sources, expert attribution, narrative arc, and a forward-looking analysis section. No human involved.'
+              },
+            ].map(item => (
+              <div key={item.step} style={{display:'flex', gap:'20px', alignItems:'flex-start'}}>
+                <div style={{
+                  fontFamily:'DM Mono, monospace', fontSize:'11px',
+                  letterSpacing:'2px', color:'var(--accent)',
+                  flexShrink:0, paddingTop:'2px'
+                }}>{item.step}</div>
+                <div>
+                  <div style={{
+                    fontFamily:'Playfair Display, serif', fontSize:'17px',
+                    fontWeight:'700', color:'var(--ink)', marginBottom:'6px'
+                  }}>{item.title}</div>
+                  <div style={{fontSize:'14px', lineHeight:'1.7', color:'var(--ink-3)'}}>
+                    {item.body}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ── FOOTER ──
+function Footer() {
+  return (
+    <footer style={{
+      background:'#0a0908', color:'var(--ink-4)',
+      padding:'40px 0', borderTop:'2px solid var(--accent)'
+    }}>
+      <div style={{maxWidth:'1200px', margin:'0 auto', padding:'0 24px'}}>
+        <div style={{
+          display:'flex', justifyContent:'space-between',
+          alignItems:'flex-start', flexWrap:'wrap', gap:'24px',
+          marginBottom:'32px'
+        }}>
+          <div>
+            <div style={{
+              fontFamily:'Playfair Display, serif', fontSize:'28px',
+              fontWeight:'900', color:'#fff', letterSpacing:'-1px', marginBottom:'6px'
+            }}>The Wire</div>
+            <div style={{
+              fontFamily:'DM Mono, monospace', fontSize:'10px',
+              letterSpacing:'2px', textTransform:'uppercase', color:'var(--ink-4)'
+            }}>Independent · AI-Reported · No Human Editorial</div>
+          </div>
+          <div style={{display:'flex', gap:'40px', flexWrap:'wrap'}}>
+            {[
+              { label:'Sections', links:['World','Politics','Economy','Technology','Science','Climate'] },
+              { label:'Publication', links:['About The Wire','Editorial Standards','AI Pipeline','Subscribe'] },
+            ].map(col => (
+              <div key={col.label}>
+                <div style={{
+                  fontFamily:'DM Mono, monospace', fontSize:'9px',
+                  letterSpacing:'2px', textTransform:'uppercase',
+                  color:'var(--ink-4)', marginBottom:'12px'
+                }}>{col.label}</div>
+                <div style={{display:'flex', flexDirection:'column', gap:'8px'}}>
+                  {col.links.map(link => (
+                    <div key={link} style={{
+                      fontFamily:'Source Serif 4, serif', fontSize:'14px',
+                      color:'var(--ink-3)', cursor:'default'
+                    }}>{link}</div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div style={{
+          borderTop:'1px solid var(--rule)', paddingTop:'20px',
+          display:'flex', justifyContent:'space-between',
+          alignItems:'center', flexWrap:'wrap', gap:'12px'
+        }}>
+          <div style={{
+            fontFamily:'DM Mono, monospace', fontSize:'10px',
+            letterSpacing:'1px', color:'var(--ink-4)'
+          }}>
+            © 2026 The Wire. All rights reserved.
+          </div>
+          <div style={{
+            fontFamily:'DM Mono, monospace', fontSize:'10px',
+            letterSpacing:'1px', color:'var(--ink-4)'
+          }}>
+            Powered by Virlo Trends
+          </div>
+        </div>
+      </div>
+    </footer>
+  )
+}
+
 export default function Home() {
   const [stories, setStories] = useState([])
   const [loading, setLoading] = useState(true)
@@ -499,6 +719,10 @@ export default function Home() {
           }
         </div>
       )}
+
+      <SubscribeBar/>
+      <AboutSection/>
+      <Footer/>
     </div>
   )
 }
